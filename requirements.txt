@@ -3,3 +3,5 @@ python-dotenv
 streamlit
 google-cloud-storage
 vertexai
+gradio>=4.0.0
+google-cloud-aiplatform
