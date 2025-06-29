@@ -36,13 +36,21 @@ def upload_to_gcs(file_path: str, destination_blob_name: str) -> str:
     return gcs_uri
 
 def download_from_gcs(gcs_uri: str) -> bytes:
-    """Downloads a file from Google Cloud Storage."""
-    if not storage_client:
-        raise Exception("GCS client not initialized. Call initialize_gcp_clients() first.")
-    
-    blob = storage.Blob.from_string(gcs_uri, client=storage_client)
-    print(f" Downloading `{gcs_uri}`...")
-    return blob.download_as_bytes()
+    if gcs_uri.startswith("gs://"):
+        if not storage_client:
+            raise Exception("GCS client not initialized. Call initialize_gcp_clients() first.")
+            
+        blob = storage.Blob.from_string(gcs_uri, client=storage_client)
+        print(f"Downloading `{gcs_uri}` from GCS...")
+        return blob.download_as_bytes()
+    else:
+        try:
+            print(f"Reading local file `{gcs_uri}`...")
+            with open(gcs_uri, "rb") as f: # If not GCS URI reading the local file
+                return f.read()
+        except Exception as e:
+            raise Exception(f"Failed to read local file `{gcs_uri}`: {e}")
+
 
 def get_mime_type(file_path: str) -> str:
     """Guesses the MIME type of a file."""
