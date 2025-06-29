@@ -8,7 +8,7 @@ load_dotenv() # Load environment variables from .env file
 GCP_PROJECT_ID = os.getenv("GCP_PROJECT_ID")
 GCP_LOCATION = "us-central1"
 GCS_BUCKET_NAME = os.getenv("GCS_BUCKET_NAME")
-DEFAULT_REFERENCE_IMAGE_GCS_URI = f"gs://{GCS_BUCKET_NAME}/Sample/Reference_Image.png"
+DEFAULT_REFERENCE_IMAGE_GCS_URI = "Reference_Image.png"
 
 # Gradio UI Configuration (optional, but good for consistency)
 CUSTOM_CSS = """
